@@ -23,12 +23,12 @@ function(make_compiler_flags FLAGS)
 endfunction()
 
 macro(make_test TEST_NAME DEPENDENCIES)
-	message("Creating test ${TEST_NAME} with ${TEST_DIR}/${TEST_NAME}.cpp")
+	message("Creating test ${PROJECT_NAME}_${TEST_NAME} with ${TEST_DIR}/${TEST_NAME}.cpp")
 	add_executable(
-		${TEST_NAME}
+		"${PROJECT_NAME}_${TEST_NAME}"
 		${TEST_DIR}/${TEST_NAME}.cpp)
 	target_link_libraries(
-		${TEST_NAME}
+		"${PROJECT_NAME}_${TEST_NAME}"
 		${DEPENDENCIES})
 	add_test(
 		NAME ${TEST_NAME}

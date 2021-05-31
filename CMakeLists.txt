@@ -11,17 +11,23 @@ include(FetchContent)
 
 make_compiler_flags(FLAGS)
 
-FetchContent_Populate(
+FetchContent_Declare(
 	fmt
 	GIT_REPOSITORY	https://github.com/fmtlib/fmt
 	SOURCE_DIR		${3RDPARTY_DIR}/fmt)
+	
+FetchContent_GetProperties(fmt)
 
-add_subdirectory(${fmt_SOURCE_DIR})
+if(NOT fmt_POPULATED)
+	FetchContent_Populate(fmt)
+
+	add_subdirectory(${fmt_SOURCE_DIR})
+endif()
 
 add_library(
 	${PROJECT_NAME}
 	# Header									Implementation
-	${INCLUDE_DIR}/logging.hpp						${SOURCE_DIR}/logging.cpp)
+	${INCLUDE_DIR}/logging.hpp					${SOURCE_DIR}/logging.cpp)
 add_library(nd::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(
 	${PROJECT_NAME}
